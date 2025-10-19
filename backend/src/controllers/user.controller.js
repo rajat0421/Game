@@ -41,6 +41,19 @@ async function login(req, res) {
 
 
 async function me(req, res) {
-    const username = req.body
+    const token = req.cookies.rajat;
+    if(!token){
+        return res.status(401).send("Unauthorized");
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const existingUser = await user.findOne({username: decoded.username});
+        if(!existingUser){
+            return res.status(401).send("Unauthorized");
+        }
+        return res.status(200).json({username: existingUser.username});
+    } catch (error) {
+        return res.status(401).send("Unauthorized");
+    }
 }
 module.exports = {register , login , me};
