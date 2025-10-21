@@ -9,5 +9,6 @@ router.post("/join/:id", userAuthMiddleware.userAuthMiddleware ,roomController.j
 router.get("/getRooms",roomController.getAllRooms);
 
 router.post("/start/:id", userAuthMiddleware.userAuthMiddleware ,roomController.startRoom);
+router.get("/leaderboard/:id", userAuthMiddleware.userAuthMiddleware ,roomController.leaderboard);
 
 module.exports = router;
