@@ -1,6 +1,13 @@
 const router = require('express').Router();
 const roomController = require('../controllers/room.controller');
+const userAuthMiddleware = require('../middlewares/userMiddleware');
 
-app.post("/create", roomController.createRoom);
+router.post("/create", userAuthMiddleware.userAuthMiddleware ,roomController.createRoom);
+router.post("/join/:id", userAuthMiddleware.userAuthMiddleware ,roomController.joinRoom);
+
+//for dev only nd non protected
+router.get("/getRooms",roomController.getAllRooms);
+
+router.post("/start/:id", userAuthMiddleware.userAuthMiddleware ,roomController.startRoom);
 
 module.exports = router;
