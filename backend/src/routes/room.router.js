@@ -10,5 +10,6 @@ router.get("/getRooms",roomController.getAllRooms);
 
 router.post("/start/:id", userAuthMiddleware.userAuthMiddleware ,roomController.startRoom);
 router.get("/leaderboard/:id", userAuthMiddleware.userAuthMiddleware ,roomController.leaderboard);
+router.get("/status/:id", userAuthMiddleware.userAuthMiddleware ,roomController.roomStatus);
 
 module.exports = router;

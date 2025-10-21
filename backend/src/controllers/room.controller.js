@@ -1,6 +1,5 @@
 const room = require("../models/room.model");
 const Word = require("../models/word.model");
-const generateRoomCode = require("../utils/generateRoomCode");
 
 async function createRoom(req, res) {
   try {
@@ -132,11 +131,24 @@ async function leaderboard(req, res) {
         score: p.score,
       }));
     return res.status(200).json({
-      roomCode: room.roomCode,
+      roomCode: existingRoom.roomCode,
       leaderboard,
     });
   } catch (error) {
     return res.status(500).json({ message: "Server error " + error.message });
   }
 }
-module.exports = { createRoom, joinRoom, getAllRooms, startRoom , leaderboard };
+
+async function roomStatus(req, res) {
+    const roomCode = req.params.id;
+    try {
+      const existingRoom = await room.findOne({ roomCode });        
+        if (!existingRoom) {
+            return res.status(404).json({ message: "Room not found" });
+        }const players = existingRoom.players.map((p) => p.username);
+        return res.status(200).json({roomname : existingRoom.roomName , status : existingRoom.status , round : existingRoom.round , players : players , winner : null});
+    } catch (error) {
+      return res.status(500).json({ message: "Server error " + error.message });
+    }
+  }
+module.exports = { createRoom, joinRoom, getAllRooms, startRoom , leaderboard , roomStatus };
