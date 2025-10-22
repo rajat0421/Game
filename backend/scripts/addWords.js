@@ -18,7 +18,7 @@ async function seedWords() {
     await mongoose.connect(MONGO_URI);
     await Word.deleteMany({});
     await Word.insertMany(wordsList);
-    console.log("✅ Words seeded successfully!");
+    console.log("Words seeded successfully!");
     process.exit();
   } catch (err) {
     console.error("Error seeding words:", err.message);

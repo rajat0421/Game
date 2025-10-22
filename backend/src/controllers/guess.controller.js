@@ -16,18 +16,18 @@ async function guess(req,res){
       if (room.status !== "in-progress")
         return res.status(400).json({ message: "Game is not in progress" });
   
-      //Check if player is in the room
+      //check if player is in the room
       const playerIndex = room.players.findIndex(
         (p) => p.username.toString() === currentUser.username.toString()
       );
       if (playerIndex === -1)
         return res.status(403).json({ message: "You are not part of this room" });
 
-          // 3️⃣ Validate word length
+          //validate word length
     if (guess.length !== room.secretWord.length)
         return res.status(400).json({ message: `Guess must be ${room.secretWord.length} letters` });
   
-        // 4️⃣ Compare letters for hints
+        //compare letters for hints
     const secretLetters = room.secretWord.split("");
     const guessLetters = guess.split("");
     let correctLetters = [];

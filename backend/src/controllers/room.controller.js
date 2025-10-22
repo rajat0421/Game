@@ -1,5 +1,6 @@
 const room = require("../models/room.model");
 const Word = require("../models/word.model");
+const generateRoomCode = require("../utils/generateRoomCode");
 
 async function createRoom(req, res) {
   try {
