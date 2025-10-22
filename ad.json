@@ -1,0 +1,718 @@
+{
+    "schemas": [
+      "urn:ietf:params:scim:schemas:core:2.0:User",
+      "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
+      "urn:ietf:params:scim:schemas:ian:2.0:User"
+    ],
+    "active": true,
+    "displayName": "Donna Vladyka",
+    "emails": [
+      {
+        "type": "work",
+        "value": "Donna.Vladyka@citci.org",
+        "primary": true
+      }
+    ],
+    "groups": [
+      {
+        "value": "f587dc89-1655-46cd-b689-fd6a3edc8bdb",
+        "display": "VPN_Meraki_AKNP",
+        "$ref": "Groups/f587dc89-1655-46cd-b689-fd6a3edc8bdb"
+      },
+      {
+        "value": "b2b3b437-781d-4c5e-ad9c-dbda7839264e",
+        "display": "ANJC Data Share Grants - Modify",
+        "$ref": "Groups/b2b3b437-781d-4c5e-ad9c-dbda7839264e"
+      },
+      {
+        "value": "353c4cf2-fdf2-4dc5-be47-0bce811f78b8",
+        "display": "CITC RS - I_Interdisciplinary_Health & Safety - Modify",
+        "$ref": "Groups/353c4cf2-fdf2-4dc5-be47-0bce811f78b8"
+      },
+      {
+        "value": "0c630e66-2bd5-4e02-b5bc-581a9652ff2d",
+        "display": "DW Accounting Power User",
+        "$ref": "Groups/0c630e66-2bd5-4e02-b5bc-581a9652ff2d"
+      },
+      {
+        "value": "1bdc9829-1ad8-4df3-b735-fbf01faa18a2",
+        "display": "OneDrive_Policy_Group",
+        "$ref": "Groups/1bdc9829-1ad8-4df3-b735-fbf01faa18a2"
+      },
+      {
+        "value": "94ee8efc-7ca4-4bee-a061-e8a22a1eaff2",
+        "display": "O365_EMS_E5",
+        "$ref": "Groups/94ee8efc-7ca4-4bee-a061-e8a22a1eaff2"
+      },
+      {
+        "value": "3a9c3d52-191c-45e9-888c-0afb894bd315",
+        "display": "NAVEX Users",
+        "$ref": "Groups/3a9c3d52-191c-45e9-888c-0afb894bd315"
+      },
+      {
+        "value": "4c29d642-712c-4633-833a-bc264f21ea19",
+        "display": "CITC - I_PL 102-477 - Modify",
+        "$ref": "Groups/4c29d642-712c-4633-833a-bc264f21ea19"
+      },
+      {
+        "value": "7a4f0bef-5028-43cf-8415-bc584ca6b2ed",
+        "display": "CITC Director BudgetsRoot",
+        "$ref": "Groups/7a4f0bef-5028-43cf-8415-bc584ca6b2ed"
+      },
+      {
+        "value": "37ea46b1-cb77-40aa-8027-dc3e5b27381e",
+        "display": "Tribal Partner Events Calendar - edit",
+        "$ref": "Groups/37ea46b1-cb77-40aa-8027-dc3e5b27381e"
+      },
+      {
+        "value": "6151fb9f-b99b-4926-837f-95b11316be8c",
+        "display": "CITC RS - I_Interdisciplinary_Billing_QBHP",
+        "$ref": "Groups/6151fb9f-b99b-4926-837f-95b11316be8c"
+      },
+      {
+        "value": "1cd4aa95-3018-4130-80c0-36a1ecb509e7",
+        "display": "O365_Apple",
+        "$ref": "Groups/1cd4aa95-3018-4130-80c0-36a1ecb509e7"
+      },
+      {
+        "value": "2b4e2cf6-1960-4c0b-98e3-9bc1777056f4",
+        "display": "O365_Veeam",
+        "$ref": "Groups/2b4e2cf6-1960-4c0b-98e3-9bc1777056f4"
+      },
+      {
+        "value": "d6ec6518-f4cb-4ea9-845e-39e9f1ab536f",
+        "display": "CITC Company Share Master Grants ANJC Audit review -modify",
+        "$ref": "Groups/d6ec6518-f4cb-4ea9-845e-39e9f1ab536f"
+      },
+      {
+        "value": "09b031b2-bfd4-45d9-8151-e2adb84c0db9",
+        "display": "O365_AudioConf",
+        "$ref": "Groups/09b031b2-bfd4-45d9-8151-e2adb84c0db9"
+      },
+      {
+        "value": "911f2361-2833-4f4a-a5e4-b93d652b4161",
+        "display": "O365_E3",
+        "$ref": "Groups/911f2361-2833-4f4a-a5e4-b93d652b4161"
+      },
+      {
+        "value": "68225643-0839-4571-ba6d-1cf442013dee",
+        "display": "O365_AssetEssentials",
+        "$ref": "Groups/68225643-0839-4571-ba6d-1cf442013dee"
+      },
+      {
+        "value": "57053cea-3ae6-4590-940a-877c81b66895",
+        "display": "CITC Company Share Master Grants 477 Taskforce - Modify",
+        "$ref": "Groups/57053cea-3ae6-4590-940a-877c81b66895"
+      },
+      {
+        "value": "8805e9d2-e788-432d-9347-cc3cd7fa7bbb",
+        "display": "CITC Social Enterprise Management Share Full",
+        "$ref": "Groups/8805e9d2-e788-432d-9347-cc3cd7fa7bbb"
+      },
+      {
+        "value": "a7e148d1-3e8a-45ee-bd4b-ff1f381afdac",
+        "display": "CITC Two Spirits Share - Full",
+        "$ref": "Groups/a7e148d1-3e8a-45ee-bd4b-ff1f381afdac"
+      },
+      {
+        "value": "6bb600d0-ee9f-439b-8a28-992a0b87d105",
+        "display": "CITC Admin Board Meetings Share - Modify",
+        "$ref": "Groups/6bb600d0-ee9f-439b-8a28-992a0b87d105"
+      },
+      {
+        "value": "1ee38bc2-765a-4c94-b8e6-0d78c84298a0",
+        "display": "Accounting calendar - Edit",
+        "$ref": "Groups/1ee38bc2-765a-4c94-b8e6-0d78c84298a0"
+      },
+      {
+        "value": "c0a566b2-1d85-4b25-af64-ae43c3836641",
+        "display": "CITC ACCT Payrol Managers Share - Modify",
+        "$ref": "Groups/c0a566b2-1d85-4b25-af64-ae43c3836641"
+      },
+      {
+        "value": "68a04da8-43dc-47e3-a160-c497906a5301",
+        "display": "CITC ACCT Telephone Share Full",
+        "$ref": "Groups/68a04da8-43dc-47e3-a160-c497906a5301"
+      },
+      {
+        "value": "aa136598-af63-470f-bf55-077f48dfc1cb",
+        "display": "FRx Application TS Local Admins",
+        "$ref": "Groups/aa136598-af63-470f-bf55-077f48dfc1cb"
+      },
+      {
+        "value": "bd4d616b-54b2-4732-a71c-180ef403910e",
+        "display": "CITC ACCT Shared - Archive Full",
+        "$ref": "Groups/bd4d616b-54b2-4732-a71c-180ef403910e"
+      },
+      {
+        "value": "a2fb9355-2add-4696-a7c2-bcc71070f99c",
+        "display": "CITC Arts Master Database Share - Full",
+        "$ref": "Groups/a2fb9355-2add-4696-a7c2-bcc71070f99c"
+      },
+      {
+        "value": "e358f248-f0ac-4cb5-9903-f9b54ad51bec",
+        "display": "CITC Payroll GP Reports",
+        "$ref": "Groups/e358f248-f0ac-4cb5-9903-f9b54ad51bec"
+      },
+      {
+        "value": "1660583d-893e-4de9-ad6e-03242b241839",
+        "display": "CITC HR Policies Write",
+        "$ref": "Groups/1660583d-893e-4de9-ad6e-03242b241839"
+      },
+      {
+        "value": "75392738-80aa-4fe2-bdd4-e655cc6c032e",
+        "display": "CITC Admin Board Finance Committee Mtgs Share - Modify",
+        "$ref": "Groups/75392738-80aa-4fe2-bdd4-e655cc6c032e"
+      },
+      {
+        "value": "cbf78712-4f98-4ab2-890c-fa2b56171b77",
+        "display": "CITC ACCT Shared - SSA Full",
+        "$ref": "Groups/cbf78712-4f98-4ab2-890c-fa2b56171b77"
+      },
+      {
+        "value": "c3defa0b-64b9-40de-b82a-460d1d02894d",
+        "display": "CITC Accounting Payroll-Pension Share",
+        "$ref": "Groups/c3defa0b-64b9-40de-b82a-460d1d02894d"
+      },
+      {
+        "value": "8dbfe9da-befd-4f80-8539-f8636c376426",
+        "display": "Duo-Test-3",
+        "$ref": "Groups/8dbfe9da-befd-4f80-8539-f8636c376426"
+      },
+      {
+        "value": "05ad96fc-4b48-4d43-8a8c-4f5cc86e06b3",
+        "display": "O365_Duo2FA",
+        "$ref": "Groups/05ad96fc-4b48-4d43-8a8c-4f5cc86e06b3"
+      },
+      {
+        "value": "f8f0106b-5cf9-49da-a81b-5622a5dfdabd",
+        "display": "ANJC Calendar Access",
+        "$ref": "Groups/f8f0106b-5cf9-49da-a81b-5622a5dfdabd"
+      },
+      {
+        "value": "444b80eb-8364-40f9-afd4-119eed627cbc",
+        "display": "CITC Acct Fundware",
+        "$ref": "Groups/444b80eb-8364-40f9-afd4-119eed627cbc"
+      },
+      {
+        "value": "791d52bd-ae11-4809-86cf-a3011852754b",
+        "display": "CITC RS - I_Interdisciplinary_CARF_CARF 2020 visit - Full",
+        "$ref": "Groups/791d52bd-ae11-4809-86cf-a3011852754b"
+      },
+      {
+        "value": "75a51ab2-07e5-4b98-8c4d-171885e4da2b",
+        "display": "CITC ACCT CITCAcct-AP Share",
+        "$ref": "Groups/75a51ab2-07e5-4b98-8c4d-171885e4da2b"
+      },
+      {
+        "value": "6a9866ab-2e28-421e-b914-75e74945f868",
+        "display": "O365_Jive_GTM",
+        "$ref": "Groups/6a9866ab-2e28-421e-b914-75e74945f868"
+      },
+      {
+        "value": "6287a88b-c653-401a-b9c7-9451c5bd9962",
+        "display": "CITC ACCT Shared HR Folder",
+        "$ref": "Groups/6287a88b-c653-401a-b9c7-9451c5bd9962"
+      },
+      {
+        "value": "6b5c205f-e32c-43b6-96b6-784a8e116934",
+        "display": "O365_ProofPoint",
+        "$ref": "Groups/6b5c205f-e32c-43b6-96b6-784a8e116934"
+      },
+      {
+        "value": "0b0e922d-a897-4774-b14e-13a76f8aae22",
+        "display": "CITC ACCT Journal Entries Share - Read Only",
+        "$ref": "Groups/0b0e922d-a897-4774-b14e-13a76f8aae22"
+      },
+      {
+        "value": "3f7baa7f-53a1-467e-83c9-572ec8a49692",
+        "display": "CITC TANF Accounting Staff DL",
+        "$ref": "Groups/3f7baa7f-53a1-467e-83c9-572ec8a49692"
+      },
+      {
+        "value": "442f6079-b1e8-4bf8-8d95-41c5c2d8f22f",
+        "display": "ANJC Authorized Room Schedulers",
+        "$ref": "Groups/442f6079-b1e8-4bf8-8d95-41c5c2d8f22f"
+      },
+      {
+        "value": "f6d32a4c-b33a-4b16-a574-8245c192728f",
+        "display": "CITC Company Share Forms - Modify",
+        "$ref": "Groups/f6d32a4c-b33a-4b16-a574-8245c192728f"
+      },
+      {
+        "value": "271da5fe-e9de-475a-acf4-4d6f95e68303",
+        "display": "CITC Grants Kickoff DL",
+        "$ref": "Groups/271da5fe-e9de-475a-acf4-4d6f95e68303"
+      },
+      {
+        "value": "cf10b470-6f70-4a77-a9e8-06e2e957c57b",
+        "display": "CITC Company Share Master Grants Parent Folder-Read",
+        "$ref": "Groups/cf10b470-6f70-4a77-a9e8-06e2e957c57b"
+      },
+      {
+        "value": "3c01cbb3-63a3-4a3f-b8a7-724adcb347d8",
+        "display": "CITC Cobblestone Contract Academy Share - Read Only",
+        "$ref": "Groups/3c01cbb3-63a3-4a3f-b8a7-724adcb347d8"
+      },
+      {
+        "value": "f0cacf75-5100-47d6-a742-00b472571fef",
+        "display": "CITC Credit Card Owners DL",
+        "$ref": "Groups/f0cacf75-5100-47d6-a742-00b472571fef"
+      },
+      {
+        "value": "fc89a25e-23d3-4dd2-9f71-e198c49f8a66",
+        "display": "Cobblestone CMS Users DL",
+        "$ref": "Groups/fc89a25e-23d3-4dd2-9f71-e198c49f8a66"
+      },
+      {
+        "value": "c460422f-28bb-4dd3-ba6f-0defeddae61e",
+        "display": "CITC Payroll Email Access Group - Full",
+        "$ref": "Groups/c460422f-28bb-4dd3-ba6f-0defeddae61e"
+      },
+      {
+        "value": "87817bbf-5fe0-48b7-b57e-cfe94ed0d9d8",
+        "display": "ANJC Department",
+        "$ref": "Groups/87817bbf-5fe0-48b7-b57e-cfe94ed0d9d8"
+      },
+      {
+        "value": "cdcdd0af-e6da-4bdc-a519-992b172ef9c5",
+        "display": "ANJC ARJLEC Share Full",
+        "$ref": "Groups/cdcdd0af-e6da-4bdc-a519-992b172ef9c5"
+      },
+      {
+        "value": "4927a752-b075-4238-b327-522c21ab6c33",
+        "display": "CITC Share for ANJC Users",
+        "$ref": "Groups/4927a752-b075-4238-b327-522c21ab6c33"
+      },
+      {
+        "value": "e84abeaf-1286-407e-a2b9-4c2918574e5e",
+        "display": "CSELC Board Member",
+        "$ref": "Groups/e84abeaf-1286-407e-a2b9-4c2918574e5e"
+      },
+      {
+        "value": "672f6e9f-365b-4760-a3b6-83ec66005fe6",
+        "display": "CITC ACCT Shared-CITCFiles-Budgets",
+        "$ref": "Groups/672f6e9f-365b-4760-a3b6-83ec66005fe6"
+      },
+      {
+        "value": "04fd483b-c387-4bca-9dfc-4048d546432c",
+        "display": "CITC Company Share Master Grants Parent Folder-Modify",
+        "$ref": "Groups/04fd483b-c387-4bca-9dfc-4048d546432c"
+      },
+      {
+        "value": "49cd1690-0d77-4f17-a780-a8b6ec4cd13b",
+        "display": "Clare Swan Early Learning Center",
+        "$ref": "Groups/49cd1690-0d77-4f17-a780-a8b6ec4cd13b"
+      },
+      {
+        "value": "dcd63f2e-bd1e-401c-b804-1d6ea35680dc",
+        "display": "CITC Leadership Council Staff",
+        "$ref": "Groups/dcd63f2e-bd1e-401c-b804-1d6ea35680dc"
+      },
+      {
+        "value": "7a14d0a8-f598-40bd-b53e-4ebcb2102f1f",
+        "display": "CITC Childcare",
+        "$ref": "Groups/7a14d0a8-f598-40bd-b53e-4ebcb2102f1f"
+      },
+      {
+        "value": "46e8b2f1-9da8-4c18-b69a-7df2dbd7961a",
+        "display": "CITC Admin Village Liaison Share - Full",
+        "$ref": "Groups/46e8b2f1-9da8-4c18-b69a-7df2dbd7961a"
+      },
+      {
+        "value": "41f910b2-0cea-4515-8944-67474c07212b",
+        "display": "CITC ACCT Shared - Holly Budget Full",
+        "$ref": "Groups/41f910b2-0cea-4515-8944-67474c07212b"
+      },
+      {
+        "value": "760a3979-09b6-45c1-9be3-303f3632334f",
+        "display": "CITC ID Department",
+        "$ref": "Groups/760a3979-09b6-45c1-9be3-303f3632334f"
+      },
+      {
+        "value": "b5b1c476-3212-4b72-b852-007f8cf05d05",
+        "display": "ANJC Data Share Full",
+        "$ref": "Groups/b5b1c476-3212-4b72-b852-007f8cf05d05"
+      },
+      {
+        "value": "8a5aca23-ca27-4aa9-b4c9-bcce03323182",
+        "display": "CITC Admin Presidents Council Share - Full",
+        "$ref": "Groups/8a5aca23-ca27-4aa9-b4c9-bcce03323182"
+      },
+      {
+        "value": "550c1913-1011-41ae-afb4-4ca915c6e54f",
+        "display": "CITC ACCT Shared Accounts Payable 1099 - Full",
+        "$ref": "Groups/550c1913-1011-41ae-afb4-4ca915c6e54f"
+      },
+      {
+        "value": "8eaf5c5c-44ac-4f05-a60b-fcfc62030b61",
+        "display": "CITC Accounting",
+        "$ref": "Groups/8eaf5c5c-44ac-4f05-a60b-fcfc62030b61"
+      },
+      {
+        "value": "731c73d0-0718-425d-bb06-76194e0f706e",
+        "display": "CITC Foraker CITC Transfer Share and Mapped Drive",
+        "$ref": "Groups/731c73d0-0718-425d-bb06-76194e0f706e"
+      },
+      {
+        "value": "d36c8ec5-4ed8-4841-9d98-3d38911fd283",
+        "display": "CITC Admin Calendar Access",
+        "$ref": "Groups/d36c8ec5-4ed8-4841-9d98-3d38911fd283"
+      },
+      {
+        "value": "efc71dc1-7e53-4513-90b7-0238f50dfe50",
+        "display": "CITC ANJC",
+        "$ref": "Groups/efc71dc1-7e53-4513-90b7-0238f50dfe50"
+      },
+      {
+        "value": "125c48bd-fd39-4370-80c5-8d4a431549ab",
+        "display": "CITC EmpowerTime Supervisors",
+        "$ref": "Groups/125c48bd-fd39-4370-80c5-8d4a431549ab"
+      },
+      {
+        "value": "73e73399-fcfe-4043-ae8f-104ddd75c9cd",
+        "display": "CITC HR Job Descriptions Read Only",
+        "$ref": "Groups/73e73399-fcfe-4043-ae8f-104ddd75c9cd"
+      },
+      {
+        "value": "d4cc457f-f2bd-415c-bbe9-d40c724a8f5d",
+        "display": "Internet - VIP",
+        "$ref": "Groups/d4cc457f-f2bd-415c-bbe9-d40c724a8f5d"
+      },
+      {
+        "value": "64214a78-6980-415a-949c-7724d57c7221",
+        "display": "CITC ACCT PR Shared",
+        "$ref": "Groups/64214a78-6980-415a-949c-7724d57c7221"
+      },
+      {
+        "value": "3a5fa274-a6c6-465b-ae85-14dc0c071cd0",
+        "display": "CITC Leadership Council Share - Full",
+        "$ref": "Groups/3a5fa274-a6c6-465b-ae85-14dc0c071cd0"
+      },
+      {
+        "value": "ff6d105f-be26-4940-8282-266ffb7d2ac7",
+        "display": "CITC TANF Accounting",
+        "$ref": "Groups/ff6d105f-be26-4940-8282-266ffb7d2ac7"
+      },
+      {
+        "value": "b486935e-2bf9-496c-9251-d0575350218e",
+        "display": "CITC Administration-ANJC Financial Full",
+        "$ref": "Groups/b486935e-2bf9-496c-9251-d0575350218e"
+      },
+      {
+        "value": "a93efb5a-a94c-409a-a385-21807817d421",
+        "display": "CITC Company Share Company_Share_Folder - Full",
+        "$ref": "Groups/a93efb5a-a94c-409a-a385-21807817d421"
+      },
+      {
+        "value": "4b5af942-7790-4238-b2ab-c4739e127594",
+        "display": "Early Head Start Committee",
+        "$ref": "Groups/4b5af942-7790-4238-b2ab-c4739e127594"
+      },
+      {
+        "value": "d2203541-5548-45ee-966c-aa8956db2556",
+        "display": "CITC Planning & Development Grants - Full",
+        "$ref": "Groups/d2203541-5548-45ee-966c-aa8956db2556"
+      },
+      {
+        "value": "e360c219-6e91-4e1d-944e-0bda2f9f1b8b",
+        "display": "CITC Administration-ANJC Share Full",
+        "$ref": "Groups/e360c219-6e91-4e1d-944e-0bda2f9f1b8b"
+      },
+      {
+        "value": "d3042f0c-4e94-4cb5-824c-9ed2180c909f",
+        "display": "CITC ACCT Journal Entries Share - Full",
+        "$ref": "Groups/d3042f0c-4e94-4cb5-824c-9ed2180c909f"
+      },
+      {
+        "value": "9e3683a3-5958-4c04-8a25-51e88d4fea35",
+        "display": "CITC ACCT Shared",
+        "$ref": "Groups/9e3683a3-5958-4c04-8a25-51e88d4fea35"
+      },
+      {
+        "value": "8333af2c-2227-4d36-b19a-a63a4e5887d2",
+        "display": "ANJC Everyone",
+        "$ref": "Groups/8333af2c-2227-4d36-b19a-a63a4e5887d2"
+      },
+      {
+        "value": "737be059-30fe-4ffe-aa3a-2015e3b50574",
+        "display": "CITC Program Leadership Council - Full",
+        "$ref": "Groups/737be059-30fe-4ffe-aa3a-2015e3b50574"
+      },
+      {
+        "value": "dca8e14d-449d-4539-b1b3-2fe4bce790dc",
+        "display": "CITC iPad Users Group",
+        "$ref": "Groups/dca8e14d-449d-4539-b1b3-2fe4bce790dc"
+      },
+      {
+        "value": "8a021277-7346-4b39-8f29-10db68dad62d",
+        "display": "SRS Accounting Management",
+        "$ref": "Groups/8a021277-7346-4b39-8f29-10db68dad62d"
+      },
+      {
+        "value": "9552e1f4-7ed0-4831-b60b-15d3aeb253ed",
+        "display": "Finance Committee",
+        "$ref": "Groups/9552e1f4-7ed0-4831-b60b-15d3aeb253ed"
+      },
+      {
+        "value": "83d872e1-c6fd-4575-8d35-7ec4652cac82",
+        "display": "Tribal Youth Program Data Share",
+        "$ref": "Groups/83d872e1-c6fd-4575-8d35-7ec4652cac82"
+      },
+      {
+        "value": "0c2db2d6-eb63-432d-98cf-453001975997",
+        "display": "ANJC Web Email",
+        "$ref": "Groups/0c2db2d6-eb63-432d-98cf-453001975997"
+      },
+      {
+        "value": "26d3ffd1-40b3-4c6e-846c-86764b20d8e3",
+        "display": "CITC ACCT Manager Share",
+        "$ref": "Groups/26d3ffd1-40b3-4c6e-846c-86764b20d8e3"
+      },
+      {
+        "value": "7174e3aa-23e3-4b56-9596-7a8cbb1d2470",
+        "display": "CITC Master Grants - Full",
+        "$ref": "Groups/7174e3aa-23e3-4b56-9596-7a8cbb1d2470"
+      },
+      {
+        "value": "6de96191-8c2f-4ae8-ae9d-074398a1f71e",
+        "display": "CITC Board Packet Share - Full",
+        "$ref": "Groups/6de96191-8c2f-4ae8-ae9d-074398a1f71e"
+      },
+      {
+        "value": "93bd8583-e478-44ac-9018-ef13130f90df",
+        "display": "CITC Board Members",
+        "$ref": "Groups/93bd8583-e478-44ac-9018-ef13130f90df"
+      },
+      {
+        "value": "fc69b07d-9cca-4c52-8fd1-08c3f079637b",
+        "display": "CITC Admin 477 638 Share - Full",
+        "$ref": "Groups/fc69b07d-9cca-4c52-8fd1-08c3f079637b"
+      },
+      {
+        "value": "f2066c77-8730-452c-81f5-2459a7d0ab3d",
+        "display": "CITC Enterprises Inc Docs",
+        "$ref": "Groups/f2066c77-8730-452c-81f5-2459a7d0ab3d"
+      },
+      {
+        "value": "a491f96a-9e29-400f-be01-af21b5e63483",
+        "display": "CITC Admin CEI Games Share - Full",
+        "$ref": "Groups/a491f96a-9e29-400f-be01-af21b5e63483"
+      },
+      {
+        "value": "90d89621-24e7-48c0-926e-c9fa7b1924f0",
+        "display": "CITC Social Enterprise Shared Share - Full",
+        "$ref": "Groups/90d89621-24e7-48c0-926e-c9fa7b1924f0"
+      },
+      {
+        "value": "6ec71cee-f3fc-4fdc-87c4-f413a9d6b985",
+        "display": "CITC COHOCup Share Full",
+        "$ref": "Groups/6ec71cee-f3fc-4fdc-87c4-f413a9d6b985"
+      },
+      {
+        "value": "91ee36df-28bf-4980-ac39-d5904ecce24a",
+        "display": "CITC Admin Planning & Development - Full",
+        "$ref": "Groups/91ee36df-28bf-4980-ac39-d5904ecce24a"
+      },
+      {
+        "value": "d1068bc0-3b7c-4f23-8aeb-a1aee6c12496",
+        "display": "CITC Board Compensation Share - Full",
+        "$ref": "Groups/d1068bc0-3b7c-4f23-8aeb-a1aee6c12496"
+      },
+      {
+        "value": "bb43b597-eee4-4b23-9c1c-258756544f6b",
+        "display": "CITC Center for Indigenous Practice Share - Full",
+        "$ref": "Groups/bb43b597-eee4-4b23-9c1c-258756544f6b"
+      },
+      {
+        "value": "dd587c8c-e8a0-4189-b2e2-9c7a66b416ed",
+        "display": "CITC Admin DL",
+        "$ref": "Groups/dd587c8c-e8a0-4189-b2e2-9c7a66b416ed"
+      },
+      {
+        "value": "422ccf8b-94fb-45cd-9762-84f54acf9765",
+        "display": "CITC Transportation",
+        "$ref": "Groups/422ccf8b-94fb-45cd-9762-84f54acf9765"
+      },
+      {
+        "value": "23fcbb7e-4b0f-4860-a160-1b9fd55e78e8",
+        "display": "CITC Admin Art Inventory",
+        "$ref": "Groups/23fcbb7e-4b0f-4860-a160-1b9fd55e78e8"
+      },
+      {
+        "value": "07c9fd77-5119-4701-9bbe-6655b10656c4",
+        "display": "CITC Administration Share Full",
+        "$ref": "Groups/07c9fd77-5119-4701-9bbe-6655b10656c4"
+      },
+      {
+        "value": "98c1386f-120d-48f5-9031-3d13d261cbb8",
+        "display": "CITC Phone List Shared",
+        "$ref": "Groups/98c1386f-120d-48f5-9031-3d13d261cbb8"
+      },
+      {
+        "value": "ceb78962-d6c8-462d-9ab1-1529e1115191",
+        "display": "CITC HR Policies Read",
+        "$ref": "Groups/ceb78962-d6c8-462d-9ab1-1529e1115191"
+      },
+      {
+        "value": "8ca4a55c-ab0e-4ae4-90d4-7951e07d7dda",
+        "display": "CITC Common Application",
+        "$ref": "Groups/8ca4a55c-ab0e-4ae4-90d4-7951e07d7dda"
+      },
+      {
+        "value": "fc71c24b-579d-4e14-86c7-1c0a6279ac86",
+        "display": "CITC Transitional Services Department",
+        "$ref": "Groups/fc71c24b-579d-4e14-86c7-1c0a6279ac86"
+      },
+      {
+        "value": "64142548-fafe-471e-917a-dc8f5d667643",
+        "display": "CITC Admin Company Share limited",
+        "$ref": "Groups/64142548-fafe-471e-917a-dc8f5d667643"
+      },
+      {
+        "value": "fd1eec35-4ebb-4a69-94c0-62f70d8f8e26",
+        "display": "CITC Giftworks Data Full",
+        "$ref": "Groups/fd1eec35-4ebb-4a69-94c0-62f70d8f8e26"
+      },
+      {
+        "value": "876bd434-3537-4b83-8726-126dd75357a5",
+        "display": "CITC TANF Transportation",
+        "$ref": "Groups/876bd434-3537-4b83-8726-126dd75357a5"
+      },
+      {
+        "value": "21312631-7d59-4282-9304-48d53f2ac9f0",
+        "display": "CITC Shared Data",
+        "$ref": "Groups/21312631-7d59-4282-9304-48d53f2ac9f0"
+      },
+      {
+        "value": "a1751325-a292-4f59-9438-19624a3935d0",
+        "display": "CITC Admin Company Share Full",
+        "$ref": "Groups/a1751325-a292-4f59-9438-19624a3935d0"
+      },
+      {
+        "value": "86dbeb15-9f67-4dae-90fd-710160948965",
+        "display": "CITC Logo Share - Read",
+        "$ref": "Groups/86dbeb15-9f67-4dae-90fd-710160948965"
+      },
+      {
+        "value": "d6982101-7abf-45ea-a037-de7bfa8fb24f",
+        "display": "CITC Shuttle Services Share - Full",
+        "$ref": "Groups/d6982101-7abf-45ea-a037-de7bfa8fb24f"
+      }
+    ],
+    "id": "8e39b175-a360-4d53-93f1-4c5b4127177d",
+    "meta": {
+      "resourceType": "User",
+      "location": "Users/8e39b175-a360-4d53-93f1-4c5b4127177d",
+      "created": "2023-08-11T16:09:52Z",
+      "lastModified": "2025-10-02T18:20:57Z"
+    },
+    "name": {
+      "givenName": "Donna",
+      "familyName": "Vladyka",
+      "formatted": "Donna Vladyka"
+    },
+    "title": "Senior Project Manager, CEI",
+    "userName": "Donna.Vladyka@citci.org",
+    "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
+      "department": "CEI Finance",
+      "manager": {
+        "value": "3a83628b-e372-4189-bd99-df13ec118553"
+      },
+      "organization": "CITC Enterprises, Inc."
+    },
+    "urn:ietf:params:scim:schemas:ian:2.0:User": {
+      "accountExpires": "never",
+      "badPasswordTime": 133837055162459410,
+      "badPwdCount": 0,
+      "cn": "Donna Vladyka",
+      "codePage": 0,
+      "countryCode": 0,
+      "dSCorePropagationData": [
+        "2025-09-16T20:10:07Z",
+        "2025-09-16T19:58:50Z",
+        "2025-09-16T19:48:07Z",
+        "2025-09-16T19:25:09Z",
+        "1601-07-14T22:36:49Z"
+      ],
+      "distinguishedName": "CN=Donna Vladyka,OU=CITC,OU=Domain Users,DC=aknp,DC=net",
+      "employeeID": "G33Z5JFA7G2BPGPF",
+      "extensionAttribute10": "1338",
+      "extensionAttribute11": "12925375690",
+      "extensionAttribute6": "false",
+      "extensionAttribute7": "SELCSULRW",
+      "garbageCollPeriod": 1209600,
+      "instanceType": 4,
+      "internetEncoding": 1310720,
+      "lastLogoff": 0,
+      "lastLogon": 134027722028205330,
+      "lastLogonTimestamp": 134039028572163820,
+      "legacyExchangeDN": "/o=AKNPHQ/ou=External (FYDIBOHF25SPDLT)/cn=Recipients/cn=050e8b5a2fb24ec6818e777f6976eaa3-Donna Vladyka",
+      "logonCount": 557,
+      "mSDSConsistencyGuid": "de+/vTnvv71g77+9U03vv73vv71MW0EnF30=",
+      "mailNickname": "Donna.Vladyka",
+      "msDSExternalDirectoryObjectId": "User_df2a5057-11c8-4452-a940-dce65c2c32fb",
+      "msExchAddressBookFlags": 1,
+      "msExchArchiveQuota": 104857600,
+      "msExchArchiveWarnQuota": 94371840,
+      "msExchBypassAudit": false,
+      "msExchCalendarLoggingQuota": 6291456,
+      "msExchDumpsterQuota": 31457280,
+      "msExchDumpsterWarningQuota": 20971520,
+      "msExchGroupSecurityFlags": 0,
+      "msExchMDBRulesQuota": 256,
+      "msExchMailboxAuditEnable": false,
+      "msExchMailboxAuditLogAgeLimit": 7776000,
+      "msExchMailboxFolderSet": 0,
+      "msExchModerationFlags": 6,
+      "msExchPoliciesIncluded": [
+        "9b767091-722f-40e5-bd49-f1e74d8b992d",
+        "{26491cfc-9e50-4857-861b-0cb8df22b5d7}"
+      ],
+      "msExchProvisioningFlags": 0,
+      "msExchRecipientDisplayType": -2147483642,
+      "msExchRecipientSoftDeletedStatus": 0,
+      "msExchRecipientTypeDetails": 2147483648,
+      "msExchRemoteRecipientType": 1,
+      "msExchTransportRecipientSettingsFlags": 0,
+      "msExchUMDtmfMap": [
+        "emailAddress:366628523952",
+        "lastNameFirstName:852395236662",
+        "firstNameLastName:366628523952"
+      ],
+      "msExchUMEnabledFlags2": -1,
+      "msExchUserAccountControl": 0,
+      "msExchVersion": 44220983382016,
+      "objectCategory": "CN=Person,CN=Schema,CN=Configuration,DC=aknp,DC=net",
+      "objectClass": [
+        "top",
+        "person",
+        "organizationalPerson",
+        "user"
+      ],
+      "objectSid": "S-1-5-21-796845957-1229272821-725345543-35646",
+      "primaryGroupID": 513,
+      "protocolSettings": [
+        "RemotePowerShell§1"
+      ],
+      "proxyAddresses": [
+        "x500:/o=ExchangeLabs/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/cn=Recipients/cn=a79601496353473eb540ea30095dc306-df2a5057-11",
+        "smtp:Donna.Vladyka@aknp.net",
+        "smtp:Donna.Vladyka@citci.com",
+        "X400:C=us;A= ;P=AKNPHQ;O=Exchange;S=Vladyka;G=Donna;",
+        "SMTP:Donna.Vladyka@citci.org",
+        "smtp:Donna.Vladyka@cookinlettribalcouncil.mail.onmicrosoft.com"
+      ],
+      "pwdLastSet": 133457774249512430,
+      "sAMAccountName": "Donna.Vladyka",
+      "sAMAccountType": 805306368,
+      "showInAddressBook": [
+        "CN=Default Global Address List,CN=All Global Address Lists,CN=Address Lists Container,CN=AKNPHQ,CN=Microsoft Exchange,CN=Services,CN=Configuration,DC=aknp,DC=net"
+      ],
+      "targetAddress": "SMTP:Donna.Vladyka@cookinlettribalcouncil.mail.onmicrosoft.com",
+      "textEncodedORAddress": "X400:C=us;A= ;P=AKNPHQ;O=Exchange;S=Vladyka;G=Donna;",
+      "uSNChanged": 57308297,
+      "uSNCreated": 64037,
+      "userAccountControl": 512
+    }
+  }
