@@ -152,4 +152,5 @@ async function roomStatus(req, res) {
       return res.status(500).json({ message: "Server error " + error.message });
     }
   }
+
 module.exports = { createRoom, joinRoom, getAllRooms, startRoom , leaderboard , roomStatus };
