@@ -153,7 +153,6 @@ The API uses JWT tokens stored in HTTP cookies (`rajat` cookie name). Protected 
 - The `/room/getRooms` endpoint is for development purposes only
 - Passwords are stored in plain text (implement hashing for production)
 - CORS is configured to allow all origins (`*`)
-- Database connection string is hardcoded in the seeding script
 
 ## 🔜 Potential Improvements
 
