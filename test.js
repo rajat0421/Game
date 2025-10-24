@@ -75,3 +75,53 @@ try {
         'noreply@aquera.com'
     );
 }
+
+
+
+[
+  {
+    schemas: [
+      "urn:ietf:params:scim:schemas:core:2.0:User",
+      "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
+      "urn:ietf:params:scim:schemas:ian:2.0:User",
+    ],
+    id: "5dfa2132-dec2-4b66-98ea-86550312dd91",
+    userName: "1dafiru@xyntra.com",
+    emails: [
+      { primary: true, type: "work", value: "dgtu3@devtmc.gac.toyota.com" },
+    ],
+    name: {
+      familyName: "Test User 3",
+      givenName: "Devgac",
+      formatted: "Devgac Test User 3",
+    },
+    displayName: "Devgac Test User 3",
+    userType: "Guest",
+    active: true,
+    "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {},
+    "urn:ietf:params:scim:schemas:ian:2.0:User": {
+      creationType: "Invitation",
+      externalUserState: "PendingAcceptance",
+      externalUserStateChangeDateTime: "2025-04-15T08:33:45Z",
+      mailNickname: "dafiru",
+      officeLocation: "Tower Bridge - SP",
+      otherMails: ["dafiru@xyntra.com"],
+      proxyAddresses: [
+        "smtp:dafiru@xyntra.com",
+        "SMTP:dgtu3@devtmc.gac.toyota.com",
+      ],
+      refreshTokensValidFromDateTime: "2025-04-15T08:33:45Z",
+      securityIdentifier:
+        "S-1-12-1-1576673586-1265032898-1434905240-2447184387",
+      showInAddressList: false,
+      signInSessionsValidFromDateTime: "2025-04-15T08:33:45Z",
+      azureADUserPrincipalName:
+        "1dafiru_xyntra.com#EXT#@aqueratest.onmicrosoft.com",
+    },
+    meta: {
+      resourceType: "User",
+      location: "Users/5dfa2132-dec2-4b66-98ea-86550312dd91",
+      created: "2025-04-15T08:33:45Z",
+    },
+  },
+];

@@ -4,26 +4,23 @@ const Guess = require("../models/guess.model");
 
 async function guess(req,res){
     const  roomCode  = req.params.id;
-    const { guess } = req.body; // player submits their guess
+    const { guess } = req.body; 
     const currentUser = req.user;
   
     try {
-      // find room
+      
       const room = await Room.findOne({ roomCode });
       if (!room) return res.status(404).json({ message: "Room not found" });
   
-      //check room status
       if (room.status !== "in-progress")
         return res.status(400).json({ message: "Game is not in progress" });
   
-      //check if player is in the room
       const playerIndex = room.players.findIndex(
         (p) => p.username.toString() === currentUser.username.toString()
       );
       if (playerIndex === -1)
         return res.status(403).json({ message: "You are not part of this room" });
 
-          //validate word length
     if (guess.length !== room.secretWord.length)
         return res.status(400).json({ message: `Guess must be ${room.secretWord.length} letters` });
   
@@ -41,10 +38,9 @@ async function guess(req,res){
       }
     });
 
-    // check if guess is correct
     const isCorrect = guess.toLowerCase() === room.secretWord.toLowerCase();
 
-    // save guess
+    //save guess
     await Guess.create({
       roomCode: room.roomCode,
       player: currentUser._id,
@@ -59,14 +55,12 @@ async function guess(req,res){
       room.winner = currentUser._id;
       room.status = "finished";
 
-      // Winner gets full score (others 0)
       room.players[playerIndex].score = 100;
       await room.save();
 
       return res.status(200).json({ message: "Correct! You won!", score: 100 });
     }
 
-    //rong guess — return hints, allow unlimited attempts
     return res.status(200).json({
       message: `${correctLetters.length} letters correct and ${correctButWrongPlace.length} correct but misplaced`,
       correctLetters,
