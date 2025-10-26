@@ -11,7 +11,6 @@ const wordsList = [
   { word: "light", category: "objects" },
 ];
 
-// const MONGO_URI = "mongodb+srv://rajattalekar5143_db_user:J44d8pMFbjdUhbOk@cluster0.djctnd1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 const MONGO_URI = process.env.MONGO_URI;
 
 async function seedWords() {
