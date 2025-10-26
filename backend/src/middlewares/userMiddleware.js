@@ -12,6 +12,7 @@ async function userAuthMiddleware(req, res, next) {
         if(!existingUser){
             return res.status(401).send("Unauthorized");
         }
+        
         req.user = existingUser;
         next();
     } catch (error) {
