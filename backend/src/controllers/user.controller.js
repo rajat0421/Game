@@ -1,5 +1,6 @@
 const user = require('../models/user.model');
 const jwt = require("jsonwebtoken");
+const logoutUser = require('../utils/autoLogout');
 
 async function register(req, res) {
     
@@ -37,9 +38,23 @@ async function login(req, res) {
     return res.status(200).send("Login successful");
 }
 
-async function logout (req,res){
-    res.clearCookie("rajat");
-    return res.status(200).send("Logout successful");
+async function logout(req, res) {
+    const token = req.cookies.rajat;
+
+    try {
+        if (!token) {
+            return res.status(400).send("Pls login");
+        }
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        await logoutUser(decoded.username,false);
+
+        res.clearCookie("rajat");
+        return res.status(200).send("Logout successful");
+
+    } catch (err) {
+        console.error("Logout error:", err);
+        return res.status(500).send("Something went wrong");
+    }
 }
 
 async function me(req, res) {

@@ -14,13 +14,11 @@ async function userAuthMiddleware(req, res, next) {
             return res.status(401).send("Unauthorized");
         }
 
-         // --- Call logout utility for inactivity check ---
          const wasLoggedOut = await logoutUser(existingUser.username, true);
          if (wasLoggedOut) {
              return res.status(401).send("Session expired due to inactivity");
          }
  
-         // Update lastActive timestamp for this request
          existingUser.lastActive = new Date();
          await existingUser.save();
 

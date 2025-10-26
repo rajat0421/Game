@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 
-const INACTIVITY_TIMEOUT_MINUTES = 15; // set your timeout here
+const INACTIVITY_TIMEOUT_MINUTES = 5; // set your timeout here
 
 /**
  * Logs out a user immediately or if they are inactive for too long
