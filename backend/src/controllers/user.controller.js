@@ -31,6 +31,7 @@ async function login(req, res) {
     if(!existingUser){
         return res.status(400).send("Invalid username");
     }
+    await user.updateOne({username}, {isLoggedIn: true});
     const token = jwt.sign({ username },process.env.SECRET_KEY);
     res.cookie("rajat",token);
     return res.status(200).send("Login successful");

@@ -1,5 +1,6 @@
 const user = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+const logoutUser = require('../utils/autoLogout');
 
 async function userAuthMiddleware(req, res, next) {
     const token = req.cookies.rajat;
@@ -22,11 +23,11 @@ async function userAuthMiddleware(req, res, next) {
          // Update lastActive timestamp for this request
          existingUser.lastActive = new Date();
          await existingUser.save();
-         
+
         req.user = existingUser;
         next();
     } catch (error) {
-        return res.status(401).send("Unauthorized" + error.message);
+        return res.status(401).send("Unauthorized " +  error);
     }
 }
 
