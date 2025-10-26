@@ -1,22 +1,38 @@
 const User = require("../models/user.model");
 
-function startAutoLogoutJob(timeoutMinutes = 15) {
-  const timeout = timeoutMinutes * 60 * 1000;
+const INACTIVITY_TIMEOUT_MINUTES = 15; // set your timeout here
 
-  setInterval(async () => {
-    const now = Date.now();
-    try {
-      const result = await User.updateMany(
-        { isLoggedIn: true, lastActive: { $lt: new Date(now - timeout) } },
-        { isLoggedIn: false }
-      );
-      if (result.modifiedCount > 0) {
-        console.log(`Auto-logged out ${result.modifiedCount} inactive user(s)`);
+/**
+ * Logs out a user immediately or if they are inactive for too long
+ * @param {string} username - the username of the user
+ * @param {boolean} checkInactivity - if true, will log out user only if inactive too long
+ */
+async function logoutUser(username, checkInactivity) {
+  try {
+    const user = await User.findOne({ username });
+    if (!user) return;
+
+    if (checkInactivity) {
+      const now = Date.now();
+      const lastActive = user.lastActive ? user.lastActive.getTime() : 0;
+      const timeout = INACTIVITY_TIMEOUT_MINUTES * 60 * 1000;
+
+      if (now - lastActive <= timeout) {
+        // user is still active, don't log out
+        return false; // optional: indicate user is still active
       }
-    } catch (err) {
-      console.error("Error in auto-logout job:", err);
     }
-  }, 60 * 1000); 
+
+    // log out the user
+    user.isLoggedIn = false;
+    await user.save();
+    console.log(`User ${username} logged out`);
+    return true; // optional: indicate user was logged out
+
+  } catch (err) {
+    console.error("Error logging out user:", err);
+  }
 }
 
-module.exports = startAutoLogoutJob;
+module.exports = logoutUser;
+
