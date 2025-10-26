@@ -1,14 +1,21 @@
 const Room = require("../models/room.model");
 const Word = require("../models/word.model");
 const Guess = require("../models/guess.model");
+const evaluateGuess  = require("../utils/evaluateGuess");
 
 async function guess(req,res){
     const  roomCode  = req.params.id;
-    const { guess } = req.body; 
+    const { guess } = req.body || {}; 
     const currentUser = req.user;
   
     try {
-      
+      if (!req.body || typeof guess !== "string") {
+      return res.status(400).json({
+        message: "Invalid request body. Please include a 'guess' field in JSON format.",
+        example: { guess: "apple" },
+      });
+    }
+
       const room = await Room.findOne({ roomCode });
       if (!room) return res.status(404).json({ message: "Room not found" });
   
@@ -21,24 +28,15 @@ async function guess(req,res){
       if (playerIndex === -1)
         return res.status(403).json({ message: "You are not part of this room" });
 
-    if (guess.length !== room.secretWord.length)
-        return res.status(400).json({ message: `Guess must be ${room.secretWord.length} letters` });
-  
-        //compare letters for hints
-    const secretLetters = room.secretWord.split("");
-    const guessLetters = guess.split("");
-    let correctLetters = [];
-    let correctButWrongPlace = [];
+  let result;
+    try {
+      result = evaluateGuess(room.secretWord, guess);
+    } catch (err) {
+      // Handle length or validation error inside util
+      return res.status(400).json({ message: err.message });
+    }
 
-    secretLetters.forEach((letter, i) => {
-      if (guessLetters[i] === letter) {
-        correctLetters.push(letter);
-      } else if (secretLetters.includes(guessLetters[i])) {
-        correctButWrongPlace.push(guessLetters[i]);
-      }
-    });
-
-    const isCorrect = guess.toLowerCase() === room.secretWord.toLowerCase();
+    const { isCorrect, correctLetters, correctButWrongPlace, correctCount, misplacedCount } = result;
 
     //save guess
     await Guess.create({
