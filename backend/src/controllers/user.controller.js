@@ -36,6 +36,10 @@ async function login(req, res) {
     return res.status(200).send("Login successful");
 }
 
+async function logout (req,res){
+    res.clearCookie("rajat");
+    return res.status(200).send("Logout successful");
+}
 
 async function me(req, res) {
     const token = req.cookies.rajat;
@@ -53,4 +57,4 @@ async function me(req, res) {
         return res.status(401).send("Unauthorized");
     }
 }
-module.exports = {register , login , me};
+module.exports = {register , login , me, logout};

@@ -7,6 +7,7 @@ require('dotenv').config();
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.get("/me",userController.me);
+router.get("/logout",userController.logout);
 
 
 module.exports = router;
