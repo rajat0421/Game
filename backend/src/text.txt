@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 just a chnge has been done
+=======
+just a chnge 
+
+changebymac
+>>>>>>> ba0547d04433cb351df2fcfad75821f7e74166de
