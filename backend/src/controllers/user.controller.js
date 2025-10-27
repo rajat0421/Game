@@ -6,7 +6,7 @@ async function register(req, res) {
     
         const {username } = req.body;
         if(!username){
-            return res.status(400).send("Username and password are required");
+            return res.status(400).send("Username is required");
          }
         const existingUser = await user.findOne({username});
         if(existingUser){
@@ -32,7 +32,17 @@ async function login(req, res) {
     if(!existingUser){
         return res.status(400).send("Invalid username");
     }
-    await user.updateOne({username}, {isLoggedIn: true});
+
+     // Prevent multiple logins
+     if (existingUser.isLoggedIn) {
+        return res.status(400).send("User already logged in from another device");
+      }
+
+ const userFromDb = await user.findOne({username});
+ userFromDb.isLoggedIn = true;
+ userFromDb.lastActive = new Date();
+ await userFromDb.save();
+
     const token = jwt.sign({ username },process.env.SECRET_KEY);
     res.cookie("rajat",token);
     return res.status(200).send("Login successful");
@@ -68,7 +78,7 @@ async function me(req, res) {
         if(!existingUser){
             return res.status(401).send("Unauthorized");
         }
-        return res.status(200).json({username: existingUser.username});
+        return res.status(200).json({userDetails: existingUser});
     } catch (error) {
         return res.status(401).send("Unauthorized");
     }
