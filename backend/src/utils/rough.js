@@ -6,4 +6,5 @@ let result = {
     rajat: "hello",
     tale:"bye"
 }
+//a
 abc(result);
