@@ -127,7 +127,7 @@ function DailyPanel() {
         <div>
           <h2>Global daily</h2>
           <p className="muted small">
-            UTC date <code>{meta.dateKey}</code> · same word for everyone · unlimited guesses
+            Same word for everyone · unlimited guesses
           </p>
         </div>
         {session && (
