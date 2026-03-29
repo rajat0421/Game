@@ -25,7 +25,7 @@ async function ensureWordInPool(w) {
 }
 
 /**
- * POST /admin/daily  { word, dateKey? }  — set global word for a UTC day (default today).
+ * POST /admin/daily  { word, dateKey? }  — set global word for a calendar day (default today).
  */
 async function setDailyWord(req, res) {
   const dateKey =
@@ -34,7 +34,7 @@ async function setDailyWord(req, res) {
       : getUtcDateKey();
 
   if (!validateDateKey(dateKey)) {
-    return res.status(400).json({ message: "dateKey must be YYYY-MM-DD (UTC)" });
+    return res.status(400).json({ message: "dateKey must be YYYY-MM-DD" });
   }
 
   const check = validateWord(req.body?.word);
@@ -72,7 +72,7 @@ async function clearDailyWord(req, res) {
       : getUtcDateKey();
 
   if (!validateDateKey(dateKey)) {
-    return res.status(400).json({ message: "dateKey must be YYYY-MM-DD (UTC)" });
+    return res.status(400).json({ message: "dateKey must be YYYY-MM-DD" });
   }
 
   try {
@@ -91,7 +91,7 @@ async function clearDailyWord(req, res) {
 }
 
 /**
- * GET /admin/daily?dateKey= — effective word for that UTC day (override or pool).
+ * GET /admin/daily?dateKey= — effective word for that day (override or pool).
  */
 async function getDailyWord(req, res) {
   const dateKey = req.query.dateKey
@@ -99,7 +99,7 @@ async function getDailyWord(req, res) {
     : getUtcDateKey();
 
   if (!validateDateKey(dateKey)) {
-    return res.status(400).json({ message: "dateKey must be YYYY-MM-DD (UTC)" });
+    return res.status(400).json({ message: "dateKey must be YYYY-MM-DD" });
   }
 
   try {

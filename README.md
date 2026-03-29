@@ -2,7 +2,7 @@
 
 Node/Express API with MongoDB, plus a React (Vite) UI.
 
-- **Global daily**: One five-letter word per **UTC calendar day** for everyone. Pick a display name **unique for that day** (UTC). Unlimited guesses. Leaderboard ranks solvers by time solved, then guess count.
+- **Global daily**: One five-letter word per **calendar day** for everyone. Pick a display name **unique for that day**. Unlimited guesses. Leaderboard ranks solvers by time solved, then guess count.
 - **Friends room**: Register/login with a username, create or join a room by code, host starts the game; first correct guess wins the room.
 
 ## Repo layout
@@ -37,7 +37,7 @@ Leave `VITE_API_URL` unset locally so the Vite dev server can proxy API calls.
 
 ### Word list (you control)
 
-Edit **`backend/scripts/seed.js`** → array **`MANUAL_WORDS`**, then **`npm run seed`**. That **replaces** the `words` collection in MongoDB. The **global daily** word is chosen **from the database**: by default `hash(UTC date + salt) % count` over words sorted alphabetically. You can **override any UTC day** with the owner API (see below). **Friend rooms** pick a random word from the same DB pool.
+Edit **`backend/scripts/seed.js`** → array **`MANUAL_WORDS`**, then **`npm run seed`**. That **replaces** the `words` collection in MongoDB. The **global daily** word is chosen **from the database**: by default `hash(calendar date + salt) % count` over words sorted alphabetically. You can **override any day** with the owner API (see below). **Friend rooms** pick a random word from the same DB pool.
 
 ## Environment variables
 
@@ -88,7 +88,7 @@ Cross-origin cookies use `SameSite=None; Secure` in production; both sites must 
 
 | Method | Path | Auth |
 |--------|------|------|
-| GET | `/daily/meta` | No — `dateKey` (UTC), word length |
+| GET | `/daily/meta` | No — `dateKey`, word length |
 | GET | `/daily/leaderboard?date=YYYY-MM-DD` | No |
 | POST | `/daily/enter` body `{ "displayName": "..." }` | Sets `game_daily` cookie |
 | GET | `/daily/me` | Cookie |
@@ -101,8 +101,8 @@ Send header **`x-admin-key: <OWNER_API_KEY>`** (or `x-owner-key`).
 
 | Method | Path | Body / query |
 |--------|------|----------------|
-| GET | `/admin/daily` | `?dateKey=YYYY-MM-DD` (optional, default today UTC) — returns `{ word, source: "override" \| "pool" }` |
-| POST | `/admin/daily` | `{ "word": "apple", "dateKey": "2026-03-30" }` — `dateKey` optional (today UTC). Word is stored as override and added to the word pool if missing. |
+| GET | `/admin/daily` | `?dateKey=YYYY-MM-DD` (optional, default today) — returns `{ word, source: "override" \| "pool" }` |
+| POST | `/admin/daily` | `{ "word": "apple", "dateKey": "2026-03-30" }` — `dateKey` optional (today). Word is stored as override and added to the word pool if missing. |
 | DELETE | `/admin/daily` | `{ "dateKey": "..." }` or `?dateKey=` — remove override for that day (back to pool hash). |
 
 ### Friends (existing)
@@ -115,6 +115,6 @@ Guesses must be **exactly five letters** (A–Z). Any combination is scored; the
 
 ## Notes
 
-- **UTC day**: Daily names and the puzzle roll over at **midnight UTC**.
+- **Day rollover**: Daily names and the puzzle use the server’s calendar day (implementation in `src/utils/dailyWord.js`).
 - Passwords are not used for friends mode (username-only); hash and add passwords if you need real accounts.
 - `GET /room/getRooms` is still open for debugging — restrict or remove in production.

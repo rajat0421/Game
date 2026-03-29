@@ -2,7 +2,7 @@
  * Your word pool (5 letters, letters only). Edit MANUAL_WORDS, then run:
  *   npm run seed
  * Words are written to MongoDB; the live server picks the global daily word from the DB
- * (hash by UTC date + salt), unless you set an owner override via /admin API.
+ * (hash by calendar date + salt), unless you set an owner override via /admin API.
  */
 
 const path = require("path");

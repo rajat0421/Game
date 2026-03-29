@@ -17,7 +17,7 @@ async function dailyAuthMiddleware(req, res, next) {
     const today = getUtcDateKey();
     if (decoded.dateKey !== today) {
       return res.status(401).json({
-        message: "New UTC day — pick your name again for today's puzzle",
+        message: "New day — pick your name again for today's puzzle",
         dateKey: today,
       });
     }

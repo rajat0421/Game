@@ -74,7 +74,7 @@ async function enter(req, res) {
   } catch (e) {
     if (e.code === 11000) {
       return res.status(409).json({
-        message: "That name is already taken today (UTC). Try another.",
+        message: "That name is already taken today. Try another.",
       });
     }
     console.error(e);
@@ -103,7 +103,7 @@ async function guessDaily(req, res) {
   const player = req.dailyPlayer;
   const dateKey = getUtcDateKey();
   if (player.dateKey !== dateKey) {
-    return res.status(400).json({ message: "UTC day changed; refresh and join again" });
+    return res.status(400).json({ message: "The puzzle day rolled over; refresh and pick your name again" });
   }
 
   if (player.solved) {
@@ -177,7 +177,7 @@ async function guessDaily(req, res) {
 async function leaderboard(req, res) {
   const dateKey = (req.query.date && String(req.query.date)) || getUtcDateKey();
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) {
-    return res.status(400).json({ message: "Invalid date; use YYYY-MM-DD (UTC)" });
+    return res.status(400).json({ message: "Invalid date; use YYYY-MM-DD" });
   }
 
   try {

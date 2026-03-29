@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-/** Owner-chosen global daily word for a given UTC date (YYYY-MM-DD). */
+/** Owner-chosen global daily word for a given calendar date (YYYY-MM-DD). */
 const dailyWordOverrideSchema = new mongoose.Schema(
   {
     dateKey: { type: String, required: true, unique: true, index: true },

@@ -148,7 +148,7 @@ function DailyPanel() {
       {!session ? (
         <form className="form" onSubmit={handleEnter}>
           <label>
-            Display name (unique today, UTC)
+            Display name (unique today)
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
