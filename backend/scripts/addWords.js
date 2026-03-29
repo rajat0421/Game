@@ -1,10 +1,12 @@
 const fs = require("fs");
+const path = require("path");
 const mongoose = require("mongoose");
 const wordList = require("word-list");
 const Word = require("../src/models/word.model");
-require("dotenv").config();
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI =
+  process.env.MONGO_URI || process.env.MONGODB_URI || process.env.DATABASE_URL;
 
 async function seedWords() {
   if (!MONGO_URI) {
