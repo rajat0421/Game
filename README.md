@@ -21,7 +21,7 @@ render.yaml  # Optional Render Blueprint
 cd backend
 cp .env.example .env      # then edit — see Environment
 npm install
-npm run seed              # loads 5-letter words from word-list (needs MONGO_URI)
+npm run seed              # loads words from scripts/see.js into MongoDB (needs MONGO_URI)
 npm run dev               # default http://localhost:3000
 ```
 
@@ -34,6 +34,10 @@ npm run dev               # http://localhost:5173 — proxies /user, /room, /gue
 ```
 
 Leave `VITE_API_URL` unset locally so the Vite dev server can proxy API calls.
+
+### Word list (you control)
+
+Edit **`backend/scripts/see.js`** → array **`MANUAL_WORDS`** (five lowercase letters each). The **global daily** word is picked from that list using the UTC date and `DAILY_WORD_SALT` / `SECRET_KEY`. **Friend rooms** still draw a random word from the same words after you run **`npm run seed`** (which syncs MongoDB from `see.js`).
 
 ## Environment variables
 

@@ -1,5 +1,6 @@
+const path = require("path");
 const crypto = require("crypto");
-const Word = require("../models/word.model");
+const { normalizedList } = require(path.join(__dirname, "../../scripts/see.js"));
 
 function getUtcDateKey(d = new Date()) {
   return d.toISOString().slice(0, 10);
@@ -15,15 +16,17 @@ function hashToIndex(dateKey, count, salt) {
   return n % count;
 }
 
+/**
+ * Today's global word — always from scripts/see.js MANUAL_WORDS (not random each request).
+ */
 async function getDailyWordString(dateKey = getUtcDateKey()) {
   const salt = process.env.DAILY_WORD_SALT || process.env.SECRET_KEY || "dev-salt";
-  const count = await Word.countDocuments();
-  if (count === 0) {
-    throw new Error("No words in database; run seed script");
+  const words = normalizedList();
+  if (words.length === 0) {
+    throw new Error("No words in scripts/see.js; add MANUAL_WORDS and run npm run seed");
   }
-  const index = hashToIndex(dateKey, count, salt);
-  const words = await Word.find({}, { word: 1 }).sort({ _id: 1 }).lean();
-  return String(words[index].word).toLowerCase();
+  const index = hashToIndex(dateKey, words.length, salt);
+  return words[index];
 }
 
 module.exports = { getUtcDateKey, getDailyWordString, hashToIndex };
