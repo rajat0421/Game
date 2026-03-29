@@ -1,14 +1,11 @@
-const path = require("path");
 const crypto = require("crypto");
-const { normalizedList } = require(path.join(__dirname, "../../scripts/see.js"));
+const Word = require("../models/word.model");
+const DailyWordOverride = require("../models/dailyWordOverride.model");
 
 function getUtcDateKey(d = new Date()) {
   return d.toISOString().slice(0, 10);
 }
 
-/**
- * Deterministic daily index from UTC date + server salt (same word for all players that day).
- */
 function hashToIndex(dateKey, count, salt) {
   if (count <= 0) return 0;
   const h = crypto.createHash("sha256").update(`${dateKey}:${salt}`).digest();
@@ -17,16 +14,22 @@ function hashToIndex(dateKey, count, salt) {
 }
 
 /**
- * Today's global word — always from scripts/see.js MANUAL_WORDS (not random each request).
+ * Global daily word: owner override in DB if set, else deterministic pick from Word collection.
  */
 async function getDailyWordString(dateKey = getUtcDateKey()) {
-  const salt = process.env.DAILY_WORD_SALT || process.env.SECRET_KEY || "dev-salt";
-  const words = normalizedList();
-  if (words.length === 0) {
-    throw new Error("No words in scripts/see.js; add MANUAL_WORDS and run npm run seed");
+  const override = await DailyWordOverride.findOne({ dateKey }).lean();
+  if (override?.word) {
+    return String(override.word).toLowerCase();
   }
-  const index = hashToIndex(dateKey, words.length, salt);
-  return words[index];
+
+  const salt = process.env.DAILY_WORD_SALT || process.env.SECRET_KEY || "dev-salt";
+  const count = await Word.countDocuments();
+  if (count === 0) {
+    throw new Error("No words in database; run: npm run seed");
+  }
+  const index = hashToIndex(dateKey, count, salt);
+  const words = await Word.find({}, { word: 1 }).sort({ word: 1 }).lean();
+  return String(words[index].word).toLowerCase();
 }
 
 module.exports = { getUtcDateKey, getDailyWordString, hashToIndex };

@@ -21,7 +21,7 @@ render.yaml  # Optional Render Blueprint
 cd backend
 cp .env.example .env      # then edit — see Environment
 npm install
-npm run seed              # loads words from scripts/see.js into MongoDB (needs MONGO_URI)
+npm run seed              # loads words from scripts/seed.js into MongoDB (needs MONGO_URI)
 npm run dev               # default http://localhost:3000
 ```
 
@@ -37,7 +37,7 @@ Leave `VITE_API_URL` unset locally so the Vite dev server can proxy API calls.
 
 ### Word list (you control)
 
-Edit **`backend/scripts/see.js`** → array **`MANUAL_WORDS`** (five lowercase letters each). The **global daily** word is picked from that list using the UTC date and `DAILY_WORD_SALT` / `SECRET_KEY`. **Friend rooms** still draw a random word from the same words after you run **`npm run seed`** (which syncs MongoDB from `see.js`).
+Edit **`backend/scripts/seed.js`** → array **`MANUAL_WORDS`**, then **`npm run seed`**. That **replaces** the `words` collection in MongoDB. The **global daily** word is chosen **from the database**: by default `hash(UTC date + salt) % count` over words sorted alphabetically. You can **override any UTC day** with the owner API (see below). **Friend rooms** pick a random word from the same DB pool.
 
 ## Environment variables
 
@@ -49,6 +49,7 @@ Edit **`backend/scripts/see.js`** → array **`MANUAL_WORDS`** (five lowercase l
 | `SECRET_KEY` | Yes | JWT signing secret |
 | `FRONTEND_URL` | Production | Exact Vercel origin, e.g. `https://your-app.vercel.app` (no trailing slash). Needed for CORS + cross-site cookies. |
 | `DAILY_WORD_SALT` | Recommended | Extra secret so the daily word sequence is not trivially derivable from the date |
+| `OWNER_API_KEY` | Optional | Long secret (8+ chars). Required to use `POST/GET/DELETE /admin/daily`. |
 | `NODE_ENV` | Production | Set to `production` on Render |
 | `PORT` | Optional | Render sets this automatically |
 
@@ -93,6 +94,16 @@ Cross-origin cookies use `SameSite=None; Secure` in production; both sites must 
 | GET | `/daily/me` | Cookie |
 | POST | `/daily/guess` body `{ "guess": "abcde" }` | Cookie |
 | POST | `/daily/logout` | Clears cookie |
+
+### Owner (global daily word)
+
+Send header **`x-admin-key: <OWNER_API_KEY>`** (or `x-owner-key`).
+
+| Method | Path | Body / query |
+|--------|------|----------------|
+| GET | `/admin/daily` | `?dateKey=YYYY-MM-DD` (optional, default today UTC) — returns `{ word, source: "override" \| "pool" }` |
+| POST | `/admin/daily` | `{ "word": "apple", "dateKey": "2026-03-30" }` — `dateKey` optional (today UTC). Word is stored as override and added to the word pool if missing. |
+| DELETE | `/admin/daily` | `{ "dateKey": "..." }` or `?dateKey=` — remove override for that day (back to pool hash). |
 
 ### Friends (existing)
 
