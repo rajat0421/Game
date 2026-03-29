@@ -12,7 +12,9 @@ async function createRoom(req, res) {
     if (roomAlreadyExists) {
       return res.status(400).json({ message: "Room name already exists" });
     }
-    const { userId, username } = req.user;
+
+    const userId = req.user._id;
+    const username = req.user.username;
 
     let roomCode;
     let isUnique = false;
@@ -26,14 +28,14 @@ async function createRoom(req, res) {
     const newRoom = new room({
       roomCode,
       roomName,
+      createdBy: username,
       players: [{ userId, username }],
       status: "waiting",
-      createdBy: username,
     });
     await newRoom.save();
     return res
       .status(201)
-      .json({ roomCode: newRoom.roomCode, createdBy: req.user.username });
+      .json({ roomCode: newRoom.roomCode, createdBy: username });
   } catch (error) {
     console.error("Error creating room:", error);
     return res.status(500).json({ message: "Server error" });
@@ -45,11 +47,11 @@ async function joinRoom(req, res) {
   const userName = req.user.username;
   try {
     const existingRoom = await room.findOne({ roomCode });
-    if (existingRoom.status !== "waiting") {
-      return res.status(400).json({ message: "Game already started!" });
-    }
     if (!existingRoom) {
       return res.status(404).json({ message: "Room not found" });
+    }
+    if (existingRoom.status !== "waiting") {
+      return res.status(400).json({ message: "Game already started!" });
     }
     const playerExists = existingRoom.players.some(
       (player) => player.username === userName
@@ -59,7 +61,7 @@ async function joinRoom(req, res) {
     }
     existingRoom.players.push({
       username: userName,
-      userId: req.user.userId,
+      userId: req.user._id,
       score: 0,
     });
     await existingRoom.save();
@@ -92,25 +94,40 @@ async function startRoom(req, res) {
     if (!existingRoom) {
       return res.status(404).json({ message: "Room not found" });
     }
-    if (existingRoom.players[0].username !== currentUser.username)
+    if (!existingRoom.players.length || existingRoom.players[0].username !== currentUser.username) {
       return res
         .status(403)
         .json({ message: "Only the host can start the game" });
+    }
 
-    //code for fetching the word from db
     const count = await Word.countDocuments();
+    if (count === 0) {
+      return res.status(400).json({ message: "No words in database" });
+    }
+
     const randomIndex = Math.floor(Math.random() * count);
-    const randomWordDoc = await Word.findOne().skip(randomIndex);
-    const randomWord = randomWordDoc.word;
+    const randomWordDoc = await Word.findOne()
+      .sort({ _id: 1 })
+      .skip(randomIndex)
+      .select("word")
+      .lean();
+
+    if (!randomWordDoc) {
+      return res.status(500).json({ message: "Could not pick a word" });
+    }
+
+    const randomWord = String(randomWordDoc.word).toLowerCase();
 
     existingRoom.secretWord = randomWord;
-    if (existingRoom.status == "waiting") {
+    if (existingRoom.status === "waiting") {
       existingRoom.status = "in-progress";
       await existingRoom.save();
-      return res
-        .status(200)
-        .json({ message: "Game started", secretWordLength: randomWord.length });
+      return res.status(200).json({
+        message: "Game started",
+        secretWordLength: randomWord.length,
+      });
     }
+    return res.status(400).json({ message: "Game already started or finished" });
   } catch (error) {
     return res.status(500).json({ message: "Server error" + error.message });
   }
@@ -123,8 +140,7 @@ async function leaderboard(req, res) {
     if (!existingRoom) {
       return res.status(404).json({ message: "Room not found" });
     }
-    //sorting players by score desc
-    const leaderboard = existingRoom.players
+    const leaderboardRows = existingRoom.players
       .slice()
       .sort((a, b) => b.score - a.score)
       .map((p) => ({
@@ -133,7 +149,7 @@ async function leaderboard(req, res) {
       }));
     return res.status(200).json({
       roomCode: existingRoom.roomCode,
-      leaderboard,
+      leaderboard: leaderboardRows,
     });
   } catch (error) {
     return res.status(500).json({ message: "Server error " + error.message });
@@ -141,16 +157,36 @@ async function leaderboard(req, res) {
 }
 
 async function roomStatus(req, res) {
-    const roomCode = req.params.id;
-    try {
-      const existingRoom = await room.findOne({ roomCode });        
-        if (!existingRoom) {
-            return res.status(404).json({ message: "Room not found" });
-        }const players = existingRoom.players.map((p) => p.username);
-        return res.status(200).json({roomname : existingRoom.roomName , status : existingRoom.status , round : existingRoom.round , players : players , winner : null});
-    } catch (error) {
-      return res.status(500).json({ message: "Server error " + error.message });
+  const roomCode = req.params.id;
+  try {
+    const existingRoom = await room
+      .findOne({ roomCode })
+      .populate("winner", "username");
+    if (!existingRoom) {
+      return res.status(404).json({ message: "Room not found" });
     }
+    const players = existingRoom.players.map((p) => p.username);
+    const winner =
+      existingRoom.winner && existingRoom.winner.username
+        ? { username: existingRoom.winner.username }
+        : null;
+    return res.status(200).json({
+      roomName: existingRoom.roomName,
+      status: existingRoom.status,
+      round: existingRoom.round,
+      players,
+      winner,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Server error " + error.message });
   }
+}
 
-module.exports = { createRoom, joinRoom, getAllRooms, startRoom , leaderboard , roomStatus };
+module.exports = {
+  createRoom,
+  joinRoom,
+  getAllRooms,
+  startRoom,
+  leaderboard,
+  roomStatus,
+};

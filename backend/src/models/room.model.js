@@ -10,6 +10,10 @@ const roomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdBy: {
+    type: String,
+    default: "",
+  },
   secretWord: {
     type: String,
     required: false, // will be added after starting the game

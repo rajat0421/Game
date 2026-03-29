@@ -1,6 +1,10 @@
-const user = require('../models/user.model');
+const user = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-const logoutUser = require('../utils/autoLogout');
+const logoutUser = require("../utils/autoLogout");
+const {
+  getSessionCookieOptions,
+  getClearCookieOptions,
+} = require("../utils/cookieOptions");
 
 async function register(req, res) {
     
@@ -33,18 +37,15 @@ async function login(req, res) {
         return res.status(400).send("Invalid username");
     }
 
-     // Prevent multiple logins
-     if (existingUser.isLoggedIn) {
-        return res.status(400).send("User already logged in from another device");
-      }
-
  const userFromDb = await user.findOne({username});
  userFromDb.isLoggedIn = true;
  userFromDb.lastActive = new Date();
  await userFromDb.save();
 
-    const token = jwt.sign({ username },process.env.SECRET_KEY);
-    res.cookie("rajat",token);
+    const token = jwt.sign({ username }, process.env.SECRET_KEY, {
+      expiresIn: "7d",
+    });
+    res.cookie("rajat", token, getSessionCookieOptions());
     return res.status(200).send("Login successful");
 }
 
@@ -58,7 +59,7 @@ async function logout(req, res) {
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         await logoutUser(decoded.username,false);
 
-        res.clearCookie("rajat");
+        res.clearCookie("rajat", getClearCookieOptions());
         return res.status(200).send("Logout successful");
 
     } catch (err) {

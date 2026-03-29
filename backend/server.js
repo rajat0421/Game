@@ -1,14 +1,18 @@
-const app = require('./src/app');
-require('dotenv').config();
-const connectDB = require('./src/db/db');
+require("dotenv").config();
+const app = require("./src/app");
+const connectDB = require("./src/db/db");
 
 connectDB();
 
+const PORT = Number(process.env.PORT) || 3000;
+
 app.get("/", (req, res) => {
-  res.send("started");
-})
+  res.json({
+    service: "word-game-api",
+    modes: ["GET /daily/meta — global daily puzzle", "POST /room/create — private rooms"],
+  });
+});
 
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server listening on port ${PORT}`);
 });

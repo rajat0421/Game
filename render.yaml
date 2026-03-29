@@ -1,0 +1,19 @@
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: word-game-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: DAILY_WORD_SALT
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

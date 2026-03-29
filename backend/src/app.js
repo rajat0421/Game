@@ -1,18 +1,31 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cookieParser = require('cookie-parser');
-const userRouter = require('./routes/user.router');
-const roomRouter = require('./routes/room.router');
-const guessRouter = require('./routes/guess.router');
-const cors = require('cors');
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const userRouter = require("./routes/user.router");
+const roomRouter = require("./routes/room.router");
+const guessRouter = require("./routes/guess.router");
+const dailyRouter = require("./routes/daily.router");
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: "*", methods: ["GET", "POST"], credentials: true }));
 
+const frontendUrl = process.env.FRONTEND_URL;
+app.use(
+  cors({
+    origin: frontendUrl || true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 
-app.use('/user',userRouter);
-app.use('/room',roomRouter);
-app.use('/guess',guessRouter);
+app.get("/health", (req, res) => {
+  res.json({ ok: true });
+});
+
+app.use("/user", userRouter);
+app.use("/room", roomRouter);
+app.use("/guess", guessRouter);
+app.use("/daily", dailyRouter);
 
 module.exports = app;

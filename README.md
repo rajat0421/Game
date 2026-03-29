@@ -1,165 +1,105 @@
-# Game Backend API
+# Word Guess — daily + private rooms
 
-A Node.js/Express backend for a multiplayer word guessing game with real-time room management and user authentication.
+Node/Express API with MongoDB, plus a React (Vite) UI.
 
-## 🚀 Features
+- **Global daily**: One five-letter word per **UTC calendar day** for everyone. Pick a display name **unique for that day** (UTC). Unlimited guesses. Leaderboard ranks solvers by time solved, then guess count.
+- **Friends room**: Register/login with a username, create or join a room by code, host starts the game; first correct guess wins the room.
 
-- **User Authentication**: JWT-based authentication with cookie storage
-- **Room Management**: Create and join game rooms with unique room codes
-- **Word Guessing Game**: Wordle-style gameplay with letter hints
-- **Real-time Scoring**: Track player scores and leaderboards
-- **MongoDB Integration**: Persistent data storage for users, rooms, guesses, and words
-
-## 📁 Project Structure
+## Repo layout
 
 ```
-backend/
-├── src/
-│   ├── app.js                 # Express app configuration
-│   ├── controllers/           # Request handlers
-│   │   ├── user.controller.js
-│   │   ├── room.controller.js
-│   │   └── guess.controller.js
-│   ├── models/               # MongoDB schemas
-│   │   ├── user.model.js
-│   │   ├── room.model.js
-│   │   ├── guess.model.js
-│   │   └── word.model.js
-│   ├── routes/               # API route definitions
-│   │   ├── user.router.js
-│   │   ├── room.router.js
-│   │   └── guess.router.js
-│   ├── middlewares/          # Custom middleware
-│   │   └── userMiddleware.js
-│   ├── utils/               # Utility functions
-│   │   └── generateRoomCode.js
-│   └── db/                  # Database connection
-│       └── db.js
-├── scripts/                 # Utility scripts
-│   └── addWords.js         # Seed words database
-├── server.js               # Server entry point
-└── package.json           # Dependencies and scripts
+backend/     # API (deploy to Render)
+frontend/    # UI (deploy to Vercel)
+render.yaml  # Optional Render Blueprint
 ```
 
-## 🛠️ Installation
+## Local development
 
-1. **Clone the repository**
+### Backend
+
+```bash
+cd backend
+cp .env.example .env      # then edit — see Environment
+npm install
+npm run seed              # loads 5-letter words from word-list (needs MONGO_URI)
+npm run dev               # default http://localhost:3000
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev               # http://localhost:5173 — proxies /user, /room, /guess, /daily to :3000
+```
+
+Leave `VITE_API_URL` unset locally so the Vite dev server can proxy API calls.
+
+## Environment variables
+
+### Backend (`backend/.env`)
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `MONGO_URI` | Yes | MongoDB connection string |
+| `SECRET_KEY` | Yes | JWT signing secret |
+| `FRONTEND_URL` | Production | Exact Vercel origin, e.g. `https://your-app.vercel.app` (no trailing slash). Needed for CORS + cross-site cookies. |
+| `DAILY_WORD_SALT` | Recommended | Extra secret so the daily word sequence is not trivially derivable from the date |
+| `NODE_ENV` | Production | Set to `production` on Render |
+| `PORT` | Optional | Render sets this automatically |
+
+### Frontend (Vercel)
+
+| Variable | Description |
+|----------|-------------|
+| `VITE_API_URL` | Your Render service URL, e.g. `https://word-game-api.onrender.com` (no trailing slash). **Empty** only for local dev with the Vite proxy. |
+
+## Deploy: Render (backend)
+
+1. Create a **Web Service**, connect the repo, **root directory** `backend`.
+2. **Build**: `npm install` · **Start**: `npm start`
+3. Add env vars: `MONGO_URI`, `SECRET_KEY`, `DAILY_WORD_SALT`, `NODE_ENV=production`, `FRONTEND_URL` (your Vercel URL).
+4. After first deploy, run the seed once (Render **Shell** or your machine with production `MONGO_URI`):
+
    ```bash
-   git clone <repository-url>
-   cd backend
+   cd backend && npm run seed
    ```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+Optional: connect the repo to Render and use [`render.yaml`](./render.yaml) as a Blueprint.
 
-3. **Environment Setup**
-   Create a `.env` file in the backend directory:
-   ```env
-   MONGO_URI=your_mongodb_connection_string
-   SECRET_KEY=your_jwt_secret_key
-   ```
+## Deploy: Vercel (frontend)
 
-4. **Seed the database with words**
-   ```bash
-   node scripts/addWords.js
-   ```
+1. New Project → import the same repo.
+2. **Root Directory**: `frontend`
+3. **Framework Preset**: Vite (or Other; build command `npm run build`, output `dist`)
+4. **Environment variable**: `VITE_API_URL` = your Render API URL (HTTPS).
+5. Redeploy the backend with `FRONTEND_URL` set to this Vercel URL so cookies and CORS work.
 
-5. **Start the server**
-   ```bash
-   node server.js
-   ```
+Cross-origin cookies use `SameSite=None; Secure` in production; both sites must use **HTTPS**.
 
-The server will run on `http://localhost:3000`
+## API overview
 
-## 📡 API Endpoints
+### Daily (global)
 
-### User Authentication
-- `POST /user/register` - Register a new user
-- `POST /user/login` - Login user
-- `GET /user/me` - Get current user info (protected)
+| Method | Path | Auth |
+|--------|------|------|
+| GET | `/daily/meta` | No — `dateKey` (UTC), word length |
+| GET | `/daily/leaderboard?date=YYYY-MM-DD` | No |
+| POST | `/daily/enter` body `{ "displayName": "..." }` | Sets `game_daily` cookie |
+| GET | `/daily/me` | Cookie |
+| POST | `/daily/guess` body `{ "guess": "abcde" }` | Cookie |
+| POST | `/daily/logout` | Clears cookie |
 
-### Room Management
-- `POST /room/create` - Create a new game room (protected)
-- `POST /room/join/:id` - Join a room by room code (protected)
-- `POST /room/start/:id` - Start the game (host only, protected)
-- `GET /room/status/:id` - Get room status (protected)
-- `GET /room/leaderboard/:id` - Get room leaderboard
-- `GET /room/getRooms` - Get all rooms (dev only)
+### Friends (existing)
 
-### Game Play
-- `POST /guess/:id` - Submit a guess for a room (protected)
+- `POST /user/register`, `POST /user/login`, `GET /user/me`, `GET /user/logout`
+- `POST /room/create`, `POST /room/join/:id`, `POST /room/start/:id`, `GET /room/status/:id`, `GET /room/leaderboard/:id`
+- `POST /guess/:roomCode`
 
-## 🎮 Game Flow
+Guesses must be **five letters** and in the **seeded dictionary**.
 
-1. **User Registration/Login**: Users create accounts and authenticate
-2. **Room Creation**: Host creates a room with a unique 5-character code
-3. **Player Joining**: Players join using the room code
-4. **Game Start**: Host initiates the game, a random word is selected
-5. **Guessing**: Players submit guesses and receive letter hints
-6. **Winning**: First correct guess wins, scores are updated
-7. **Leaderboard**: View final scores and rankings
+## Notes
 
-## 🗃️ Database Models
-
-### User
-- `username`: Unique username
-- `password`: User password (plain text - consider hashing)
-- `totalscore`: Cumulative score across games
-- `joinedrooms`: Array of room references
-
-### Room
-- `roomCode`: Unique 5-character room identifier
-- `roomName`: Display name for the room
-- `secretWord`: The word to guess (set when game starts)
-- `status`: Game state (waiting/in-progress/finished)
-- `players`: Array of player objects with scores
-- `winner`: Reference to winning user
-
-### Word
-- `word`: The word string
-- `category`: Word category (fruits, objects, etc.)
-
-### Guess
-- `roomCode`: Associated room
-- `player`: User who made the guess
-- `guess`: The guessed word
-- `correctLetters`: Letters in correct positions
-- `correctButWrongPlace`: Correct letters in wrong positions
-- `isCorrect`: Boolean indicating if guess was correct
-
-## 🔒 Authentication
-
-The API uses JWT tokens stored in HTTP cookies (`rajat` cookie name). Protected routes require the [`userAuthMiddleware`](src/middlewares/userMiddleware.js) middleware.
-
-## 🔧 Key Utilities
-
-- [`generateRoomCode`](src/utils/generateRoomCode.js): Generates unique 5-character room codes
-- Database connection via [`connectDB`](src/db/db.js)
-- Word seeding script in [`addWords.js`](scripts/addWords.js)
-
-## 📦 Dependencies
-
-- **express**: Web framework
-- **mongoose**: MongoDB ODM
-- **jsonwebtoken**: JWT authentication
-- **cookie-parser**: Cookie parsing middleware
-- **cors**: Cross-origin resource sharing
-- **dotenv**: Environment variable management
-
-## 🚧 Development Notes
-
-- The `/room/getRooms` endpoint is for development purposes only
-- Passwords are stored in plain text (implement hashing for production)
-- CORS is configured to allow all origins (`*`)
-
-## 🔜 Potential Improvements
-
-- Implement password hashing
-- Add input validation and sanitization
-- Implement rate limiting
-- Add comprehensive error handling
-- Add API documentation (Swagger)
-- Implement WebSocket for real-time updates
-- Add game time limits and multiple rounds
+- **UTC day**: Daily names and the puzzle roll over at **midnight UTC**.
+- Passwords are not used for friends mode (username-only); hash and add passwords if you need real accounts.
+- `GET /room/getRooms` is still open for debugging — restrict or remove in production.
