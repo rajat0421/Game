@@ -111,7 +111,7 @@ Send header **`x-admin-key: <OWNER_API_KEY>`** (or `x-owner-key`).
 - `POST /room/create`, `POST /room/join/:id`, `POST /room/start/:id`, `GET /room/status/:id`, `GET /room/leaderboard/:id`
 - `POST /guess/:roomCode`
 
-Guesses must be **five letters** and in the **seeded dictionary**.
+Guesses must be **exactly five letters** (A–Z). Any combination is scored; the answer still comes from your word pool / owner override in the DB.
 
 ## Notes
 

@@ -1,13 +1,7 @@
 const Room = require("../models/room.model");
-const Word = require("../models/word.model");
 const Guess = require("../models/guess.model");
 const evaluateGuess = require("../utils/evaluateGuess");
-
-async function isWordAllowed(guess) {
-  const w = guess.toLowerCase().trim();
-  if (!/^[a-z]{5}$/.test(w)) return false;
-  return !!(await Word.exists({ word: w }));
-}
+const { parseFiveLetterGuess } = require("../utils/guessFormat");
 
 async function guess(req, res) {
   const roomCode = req.params.id;
@@ -22,9 +16,9 @@ async function guess(req, res) {
       });
     }
 
-    const allowed = await isWordAllowed(guessWord);
-    if (!allowed) {
-      return res.status(400).json({ message: "Not in the 5-letter word list" });
+    const parsed = parseFiveLetterGuess(guessWord);
+    if (!parsed.ok) {
+      return res.status(400).json({ message: parsed.error });
     }
 
     const roomDoc = await Room.findOne({ roomCode });
@@ -43,7 +37,7 @@ async function guess(req, res) {
 
     let result;
     try {
-      result = evaluateGuess(roomDoc.secretWord, guessWord);
+      result = evaluateGuess(roomDoc.secretWord, parsed.word);
     } catch (err) {
       return res.status(400).json({ message: err.message });
     }
@@ -60,7 +54,7 @@ async function guess(req, res) {
     await Guess.create({
       roomCode: roomDoc.roomCode,
       player: currentUser._id,
-      guess: guessWord,
+      guess: parsed.word,
       correctLetters,
       correctButWrongPlace,
       isCorrect,

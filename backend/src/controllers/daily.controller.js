@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const DailyParticipant = require("../models/dailyParticipant.model");
-const Word = require("../models/word.model");
 const evaluateGuess = require("../utils/evaluateGuess");
+const { parseFiveLetterGuess } = require("../utils/guessFormat");
 const { getUtcDateKey, getDailyWordString } = require("../utils/dailyWord");
 const {
   getSessionCookieOptions,
@@ -27,13 +27,6 @@ function validateDisplayName(displayName) {
     return "Use letters, numbers, spaces, hyphen, or underscore only";
   }
   return null;
-}
-
-async function isWordAllowed(guess) {
-  const w = guess.toLowerCase().trim();
-  if (!/^[a-z]{5}$/.test(w)) return false;
-  const exists = await Word.exists({ word: w });
-  return !!exists;
 }
 
 async function meta(req, res) {
@@ -118,12 +111,13 @@ async function guessDaily(req, res) {
       solved: true,
       guessCount: player.guessCount,
       solvedAt: player.solvedAt,
+      feedback: null,
     });
   }
 
-  const allowed = await isWordAllowed(guess);
-  if (!allowed) {
-    return res.status(400).json({ message: "Not in the 5-letter word list" });
+  const parsed = parseFiveLetterGuess(guess);
+  if (!parsed.ok) {
+    return res.status(400).json({ message: parsed.error });
   }
 
   let secretWord;
@@ -135,7 +129,7 @@ async function guessDaily(req, res) {
 
   let result;
   try {
-    result = evaluateGuess(secretWord, guess);
+    result = evaluateGuess(secretWord, parsed.word);
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }
