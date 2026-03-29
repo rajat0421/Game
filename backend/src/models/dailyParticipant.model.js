@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
+const feedbackEnum = ["correct", "present", "absent"];
+
+const guessEntrySchema = new mongoose.Schema(
+  {
+    word: { type: String, required: true },
+    feedback: [{ type: String, enum: feedbackEnum }],
+    isCorrect: { type: Boolean, default: false },
+  },
+  { _id: false }
+);
+
 const dailyParticipantSchema = new mongoose.Schema(
   {
     dateKey: { type: String, required: true, index: true },
@@ -9,6 +20,7 @@ const dailyParticipantSchema = new mongoose.Schema(
     solvedAt: Date,
     guessCount: { type: Number, default: 0 },
     firstGuessAt: Date,
+    guessHistory: { type: [guessEntrySchema], default: [] },
   },
   { timestamps: true }
 );

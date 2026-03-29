@@ -90,6 +90,7 @@ async function me(req, res) {
     solved: p.solved,
     guessCount: p.guessCount,
     solvedAt: p.solvedAt,
+    guessHistory: p.guessHistory || [],
   });
 }
 
@@ -137,6 +138,14 @@ async function guessDaily(req, res) {
   player.guessCount += 1;
   if (!player.firstGuessAt) player.firstGuessAt = new Date();
 
+  if (!Array.isArray(player.guessHistory)) player.guessHistory = [];
+
+  player.guessHistory.push({
+    word: parsed.word,
+    feedback: result.feedback,
+    isCorrect: result.isCorrect,
+  });
+
   if (result.isCorrect) {
     player.solved = true;
     player.solvedAt = new Date();
@@ -178,7 +187,7 @@ async function leaderboard(req, res) {
     })
       .sort({ solvedAt: 1, guessCount: 1 })
       .limit(100)
-      .select("displayName solvedAt guessCount")
+      .select("displayName solvedAt guessCount guessHistory")
       .lean();
 
     res.json({ dateKey, leaderboard: rows });

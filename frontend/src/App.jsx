@@ -49,6 +49,14 @@ function DailyPanel() {
     try {
       const me = await api("/daily/me");
       setSession(me);
+      if (Array.isArray(me.guessHistory)) {
+        setBoard(
+          me.guessHistory.map((g) => ({
+            word: g.word,
+            feedback: g.feedback,
+          }))
+        );
+      }
       return me;
     } catch {
       setSession(null);
@@ -186,17 +194,38 @@ function DailyPanel() {
       {error ? <p className="error">{error}</p> : null}
 
       <aside className="leader">
-        <h3>Leaderboard (UTC day)</h3>
-        <ol>
+        <h3>Today&apos;s leaderboard</h3>
+        <p className="muted small leader-sub">
+          Fastest solvers — each line shows the guesses they used.
+        </p>
+        <ol className="leader-list">
           {rows.length === 0 ? (
             <li className="muted">No solves yet</li>
           ) : (
             rows.map((r, i) => (
-              <li key={i}>
-                <span>{r.displayName}</span>
-                <span className="muted">
-                  {r.guessCount} guesses · {r.solvedAt ? new Date(r.solvedAt).toLocaleTimeString() : ""}
-                </span>
+              <li key={i} className="leader-card">
+                <div className="leader-card-head">
+                  <span className="leader-rank">#{i + 1}</span>
+                  <span className="leader-name">{r.displayName}</span>
+                  <span className="muted leader-meta">
+                    {r.guessCount} {r.guessCount === 1 ? "guess" : "guesses"}
+                    {r.solvedAt ? ` · ${new Date(r.solvedAt).toLocaleTimeString()}` : ""}
+                  </span>
+                </div>
+                {Array.isArray(r.guessHistory) && r.guessHistory.length > 0 ? (
+                  <ul className="leader-guesses">
+                    {r.guessHistory.map((g, gi) => (
+                      <li key={gi} className="leader-guess-line">
+                        <span className="leader-guess-word">{String(g.word || "").toUpperCase()}</span>
+                        <span className="leader-mini-tiles" aria-hidden>
+                          {(g.feedback || []).map((fb, fi) => (
+                            <span key={fi} className={`leader-mini leader-mini--${fb}`} />
+                          ))}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))
           )}
